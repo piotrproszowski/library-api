@@ -7,7 +7,6 @@ import { UsersModule } from './users/users.module';
 import { StructureModule } from './structure/structure.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from './config/config.module';
-import { RentRegistryModule } from './structure/rent-registry/rent-registry.module';
 
 @Module({
   imports: [
@@ -16,7 +15,6 @@ import { RentRegistryModule } from './structure/rent-registry/rent-registry.modu
     UsersModule,
     StructureModule,
     DatabaseModule,
-    RentRegistryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
