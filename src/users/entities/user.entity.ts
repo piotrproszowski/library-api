@@ -30,7 +30,7 @@ export class User {
   @Column({ nullable: true })
   name?: string | null;
 
-  @Column({ enum: UserRole, default: UserRole.RENTER })
+  @Column({ enum: UserRole, default: UserRole.CLIENT })
   role: UserRole;
 
   @Column({ default: false })
