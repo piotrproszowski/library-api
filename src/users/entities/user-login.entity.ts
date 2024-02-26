@@ -21,7 +21,7 @@ export class UserLogin {
   ip: string;
 
   @Column()
-  ua: string;
+  userAgent: string;
 
   @Column({ select: false, nullable: true })
   token?: string | null;
