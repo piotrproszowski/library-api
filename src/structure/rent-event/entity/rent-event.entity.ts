@@ -18,7 +18,7 @@ export class RentEvent {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ enum: RentEventType })
   type: RentEventType;
 
   @CreateDateColumn()
