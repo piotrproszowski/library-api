@@ -1,0 +1,21 @@
+<!-- START FOOTER -->
+<div class="footer">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class="content-block">
+        {{#if address}}
+        <span class="apple-link">{{ address }}</span>
+        {{/if}}
+        {{#if unsubscribe}}
+        <br> Nie chcesz otrzymywać wiadomości email? <a href="{{ unsubscribe }}">Anuluj subskrypcję</a>.
+        {{/if}}
+      </td>
+    </tr>
+    <tr>
+      <td class="content-block powered-by">
+        Powered by <a href="https://imoli.dev">Imoli</a>.
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- END FOOTER -->

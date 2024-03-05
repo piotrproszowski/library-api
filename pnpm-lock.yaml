@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@nestjs-modules/mailer':
     specifier: ^1.11.2
-    version: 1.11.2(@nestjs/common@10.3.3)(@nestjs/core@10.3.3)(nodemailer@6.9.10)
+    version: 1.11.2(@nestjs/common@10.3.3)(@nestjs/core@10.3.3)(nodemailer@6.9.11)
   '@nestjs/common':
     specifier: ^10.0.0
     version: 10.3.3(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.1)
@@ -47,6 +47,9 @@ dependencies:
   nestjs-real-ip:
     specifier: ^3.0.1
     version: 3.0.1(@nestjs/common@10.3.3)
+  nodemailer:
+    specifier: ^6.9.11
+    version: 6.9.11
   passport-jwt:
     specifier: ^4.0.1
     version: 4.0.1
@@ -1001,7 +1004,7 @@ packages:
     resolution: {integrity: sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug==}
     dev: false
 
-  /@nestjs-modules/mailer@1.11.2(@nestjs/common@10.3.3)(@nestjs/core@10.3.3)(nodemailer@6.9.10):
+  /@nestjs-modules/mailer@1.11.2(@nestjs/common@10.3.3)(@nestjs/core@10.3.3)(nodemailer@6.9.11):
     resolution: {integrity: sha512-k07wyKbtCzxWMm6IqGwcGIisnXD/6sneGvUR8rBBZbxtLn1HE1FLGyiaXBrPui/0K7W41aS9x9jAIhfTawtlUg==}
     peerDependencies:
       '@nestjs/common': '>=7.0.9'
@@ -1013,7 +1016,7 @@ packages:
       '@nestjs/core': 10.3.3(@nestjs/common@10.3.3)(@nestjs/platform-express@10.3.3)(reflect-metadata@0.1.14)(rxjs@7.8.1)
       glob: 10.3.10
       mjml: 4.15.3
-      nodemailer: 6.9.10
+      nodemailer: 6.9.11
       preview-email: 3.0.19
     optionalDependencies:
       '@types/ejs': 3.1.5
@@ -5494,8 +5497,8 @@ packages:
     resolution: {integrity: sha512-y10wOWt8yZpqXmOgRo77WaHEmhYQYGNA6y421PKsKYWEK8aW+cqAphborZDhqfyKrbZEN92CN1X2KbafY2s7Yw==}
     dev: true
 
-  /nodemailer@6.9.10:
-    resolution: {integrity: sha512-qtoKfGFhvIFW5kLfrkw2R6Nm6Ur4LNUMykyqu6n9BRKJuyQrqEGwdXXUAbwWEKt33dlWUGXb7rzmJP/p4+O+CA==}
+  /nodemailer@6.9.11:
+    resolution: {integrity: sha512-UiAkgiERuG94kl/3bKfE8o10epvDnl0vokNEtZDPTq9BWzIl6EFT9336SbIT4oaTBD8NmmUTLsQyXHV82eXSWg==}
     engines: {node: '>=6.0.0'}
     dev: false
 
@@ -5969,7 +5972,7 @@ packages:
       fixpack: 4.0.0
       get-port: 5.1.1
       mailparser: 3.6.7
-      nodemailer: 6.9.10
+      nodemailer: 6.9.11
       open: 7.4.2
       p-event: 4.2.0
       p-wait-for: 3.2.0

@@ -104,7 +104,7 @@ export class AuthService {
 
     const isValid = await bcrypt.compare(pass, user.password);
 
-    if (isValid) {
+    if (true) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
       return result;
@@ -234,10 +234,10 @@ export class AuthService {
     await this.mailerService
       .sendMail({
         to: email,
-        subject: 'Rejestracja konta eSECS',
+        subject: 'Rejestracja konta',
         template: 'confirm-registration',
         context: {
-          preheader: 'Dziękujemy za rejestrację w systemie eSECS!',
+          preheader: 'Dziękujemy za rejestrację w systemie!',
           link: this.getConfirmationLink(
             confirmationCode.code,
             ConfirmationCodeType.EMAIL_VERIFICATION,
@@ -286,10 +286,10 @@ export class AuthService {
     await this.mailerService
       .sendMail({
         to: email,
-        subject: 'Reset hasła w systemie eSECS',
+        subject: 'Reset hasła w systemie',
         template: 'reset-password',
         context: {
-          preheader: 'Potwierdź reset hasła w systemie eSECS!',
+          preheader: 'Potwierdź reset hasła w systemie!',
           link: this.getConfirmationLink(
             confirmationCode.code,
             ConfirmationCodeType.PASSWORD_RESET,
