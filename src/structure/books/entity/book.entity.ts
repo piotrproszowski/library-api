@@ -19,6 +19,9 @@ export class Book {
   @Column({ nullable: true })
   description?: string | null;
 
+  @Column({ unique: true, nullable: true })
+  isbn: string;
+
   @Column({ nullable: true })
   author?: string | null;
 

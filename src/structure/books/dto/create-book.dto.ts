@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsString } from 'class-validator';
+import { IsBoolean, IsISBN, IsString } from 'class-validator';
 
 export class CreateBookDto {
   @ApiProperty({ required: true })
@@ -13,6 +13,10 @@ export class CreateBookDto {
   @ApiProperty({ required: false })
   @IsString()
   readonly description?: string;
+
+  @ApiProperty({ required: true })
+  @IsISBN()
+  readonly isbn: string;
 
   @ApiProperty({ required: false })
   @IsString()
