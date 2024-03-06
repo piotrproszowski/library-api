@@ -6,7 +6,7 @@ import { RentEventController } from './rent-event/rent-event.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from 'src/users/users.module';
 import { RentRegistry } from './rent-registry/entity/rent-registry.entity';
-import { Books } from './books/entity/books.entity';
+import { Book } from './books/entity/book.entity';
 import { RentEvent } from './rent-event/entity/rent-event.entity';
 import { Renter } from './renters/entity/renter.entity';
 import { RentRegistryController } from './rent-registry/rent-registry.controller';
@@ -18,7 +18,7 @@ import { RentersService } from './renters/renters.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([RentRegistry, Books, RentEvent, Renter]),
+    TypeOrmModule.forFeature([RentRegistry, Book, RentEvent, Renter]),
     forwardRef(() => UsersModule),
   ],
   controllers: [

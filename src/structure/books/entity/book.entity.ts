@@ -9,11 +9,11 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Books {
+export class Book {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
+  @Column()
   title: string;
 
   @Column({ nullable: true })
@@ -23,7 +23,7 @@ export class Books {
   author?: string | null;
 
   @Column({ nullable: true })
-  price?: number | null;
+  price?: string | null;
 
   @Column({ default: false })
   isActive: boolean;
