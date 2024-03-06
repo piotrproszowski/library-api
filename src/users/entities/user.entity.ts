@@ -4,7 +4,9 @@ import {
   DeleteDateColumn,
   Entity,
   Index,
+  ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -14,6 +16,7 @@ import { UserRole } from '../enums/user-role.enum';
 import { ConfirmationCode } from '../../auth/entities/confirmation-code.entity';
 import { RoleHelper } from '../helpers/role.helper';
 import { UserLogin } from './user-login.entity';
+import { RentEvent } from 'src/structure/rent-event/entity/rent-event.entity';
 
 @Entity()
 @Index(['email'], { unique: true })
@@ -42,6 +45,12 @@ export class User {
   @OneToMany(() => ConfirmationCode, (code) => code.user)
   confirmationCodes: ConfirmationCode[];
 
+  @OneToMany(() => UserLogin, (login) => login.user)
+  logins: UserLogin[];
+
+  @ManyToOne(() => RentEvent, (rent) => rent.user)
+  rentEvents: RentEvent[];
+
   @CreateDateColumn()
   createdAt: Date;
 
@@ -50,9 +59,6 @@ export class User {
 
   @DeleteDateColumn({ nullable: true })
   deletedAt?: Date | null;
-
-  @OneToMany(() => UserLogin, (login) => login.user)
-  logins: UserLogin[];
 
   public hasAccessTo?(role: UserRole) {
     return RoleHelper.hasUserAccessTo(this, role);

@@ -1,5 +1,5 @@
 import { RentRegistry } from 'src/structure/rent-registry/entity/rent-registry.entity';
-import { Renter } from 'src/structure/renters/entity/renter.entity';
+import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -24,8 +24,8 @@ export class RentEvent {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => Renter, (renter) => renter.rentEvents, { eager: true })
-  renter: Renter;
+  @ManyToOne(() => User, (user) => user.rentEvents, { eager: true })
+  user: User;
 
   @ManyToOne(() => RentRegistry, (rent) => rent.rentEvents, { eager: true })
   rentRegistry: RentRegistry;
