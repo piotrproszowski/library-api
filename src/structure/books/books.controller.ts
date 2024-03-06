@@ -3,8 +3,8 @@ import { Body, Controller, Param, Post, Put } from '@nestjs/common';
 
 import { BooksService } from './books.service';
 
-import { CreateBookDto } from './dto/create-book.dto'; // Import the missing CreateBookDto class
-import { UpdateBookDto } from './dto/updatt-book.dto';
+import { CreateBookDto } from './dto/create-book.dto';
+import { UpdateBookDto } from './dto/update-book.dto';
 
 @ApiBearerAuth()
 @ApiTags('books')
