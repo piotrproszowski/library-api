@@ -37,4 +37,50 @@ export class BooksService {
 
     return { book: { ...book, ...updateBookDto } };
   }
+
+  async getAll() {
+    const books = await this.booksRepository.find();
+
+    if (!books) {
+      throw new NotFoundException('Books not found');
+    }
+
+    return { books };
+  }
+
+  async getOne(id: string) {
+    const book = await this.booksRepository.findOneBy({ id });
+
+    if (!book) {
+      throw new NotFoundException('Book not found');
+    }
+
+    return { book };
+  }
+
+  async delete(id: string) {
+    const book = await this.booksRepository.findOneBy({ id });
+
+    if (!book) {
+      throw new NotFoundException('Book not found');
+    }
+
+    const deletedBook = await this.booksRepository.delete(id);
+
+    return { deletedBook };
+  }
+
+  async changeStatus(id: string, action: string) {
+    // const book = await this.booksRepository.findOneBy({ id });
+
+    // if (!book) {
+    //   throw new NotFoundException('Book not found');
+    // }
+
+    // const updatedBook = await this.booksRepository.update(id, {
+    //   isActive: action === 'activate' ? true : false,
+    // });
+
+    return { id, action };
+  }
 }
