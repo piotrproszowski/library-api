@@ -1,4 +1,4 @@
-import { Books } from 'src/structure/books/entity/books.entity';
+import { Book } from 'src/structure/books/entity/book.entity';
 import { RentEvent } from 'src/structure/rent-event/entity/rent-event.entity';
 import { Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -7,8 +7,8 @@ export class RentRegistry {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Books, (book) => book.rentRegistry)
-  book: Books;
+  @ManyToOne(() => Book, (book) => book.rentRegistry)
+  book: Book;
 
   @OneToMany(() => RentEvent, (rent) => rent.rentRegistry)
   rentEvents: RentEvent[];
