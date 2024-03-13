@@ -104,19 +104,20 @@ export class BooksService {
    * Changes the status of a book by its ID.
    * @param id - The ID of the book to change the status of.
    * @param action - The action to perform on the book's status.
-   * @returns The ID of the book and the action performed.
+   * @returns The updated book.
+   * @throws NotFoundException if the book is not found.
    */
   async changeStatus(id: string, action: string) {
-    // const book = await this.booksRepository.findOneBy({ id });
+    const book = await this.booksRepository.findOneBy({ id });
 
-    // if (!book) {
-    //   throw new NotFoundException('Book not found');
-    // }
+    if (!book) {
+      throw new NotFoundException('Book not found');
+    }
 
-    // const updatedBook = await this.booksRepository.update(id, {
-    //   isActive: action === 'activate' ? true : false,
-    // });
+    const updatedBook = await this.booksRepository.update(id, {
+      isActive: action === 'activate' ? true : false,
+    });
 
-    return { id, action };
+    return { book: updatedBook };
   }
 }

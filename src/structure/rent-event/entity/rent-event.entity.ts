@@ -6,9 +6,10 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
-enum RentEventType {
+export enum RentEventType {
   RENT = 'rent',
   RETURN = 'return',
 }
@@ -21,8 +22,16 @@ export class RentEvent {
   @Column({ enum: RentEventType })
   type: RentEventType;
 
+  @Column({
+    type: 'timestamptz',
+  })
+  date: Date;
+
   @CreateDateColumn()
   createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @ManyToOne(() => User, (user) => user.rentEvents, { eager: true })
   user: User;
