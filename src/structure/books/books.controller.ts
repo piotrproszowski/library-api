@@ -10,12 +10,14 @@ import {
   Put,
 } from '@nestjs/common';
 
-import { BooksService } from './books.service';
-
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
+
 import { Roles } from 'src/auth/decorators/roles.decorator';
+
 import { UserRole } from 'src/users/enums/user-role.enum';
+
+import { BooksService } from './books.service';
 
 @ApiBearerAuth()
 @ApiTags('books')
@@ -25,14 +27,14 @@ export class BooksController {
 
   @Post('/')
   @Roles(UserRole.ADMIN, UserRole.EMPLOYEE, UserRole.SUPER_ADMIN)
-  create(@Body() createBookDto: CreateBookDto) {
-    return this.booksService.create(createBookDto);
+  create(@Body() data: CreateBookDto) {
+    return this.booksService.create(data);
   }
 
   @Put('/:id')
   @Roles(UserRole.ADMIN, UserRole.EMPLOYEE, UserRole.SUPER_ADMIN)
-  update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
-    return this.booksService.update(id, updateBookDto);
+  update(@Param('id') id: string, @Body() data: UpdateBookDto) {
+    return this.booksService.update(id, data);
   }
 
   @Put('/:id/:action')
