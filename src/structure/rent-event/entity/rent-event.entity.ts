@@ -33,9 +33,9 @@ export class RentEvent {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.rentEvents, { eager: true })
+  @ManyToOne(() => User, (user) => user.rentEvents)
   user: User;
 
-  @ManyToOne(() => RentRegistry, (rent) => rent.rentEvents, { eager: true })
+  @ManyToOne(() => RentRegistry, (rent) => rent.rentEvents)
   rentRegistry: RentRegistry;
 }
