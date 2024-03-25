@@ -20,7 +20,7 @@ export class CreateBookDto {
 
   @ApiProperty({ required: false, nullable: true })
   @IsOptional()
-  @Transform(({ value }) => Number(value) || null)
+  @Transform(({ value }) => parseFloat(value) || null)
   @IsNumber()
   price?: number | null;
 

@@ -49,7 +49,7 @@ export class Book {
   @Column({ nullable: true })
   publisher?: string | null;
 
-  @Column({ nullable: true })
+  @Column('numeric', { nullable: true, precision: 5, scale: 2 })
   price?: number | null;
 
   @Column({ nullable: true })
