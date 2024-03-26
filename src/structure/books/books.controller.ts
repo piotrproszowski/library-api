@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
   Put,
 } from '@nestjs/common';
@@ -31,7 +32,7 @@ export class BooksController {
     return this.booksService.create(data);
   }
 
-  @Put('/:id')
+  @Patch('/:id')
   @Roles(UserRole.ADMIN, UserRole.EMPLOYEE, UserRole.SUPER_ADMIN)
   update(@Param('id') id: string, @Body() data: UpdateBookDto) {
     return this.booksService.update(id, data);

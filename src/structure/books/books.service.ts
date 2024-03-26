@@ -91,7 +91,7 @@ export class BooksService {
     if (affected === 0 || !affected) {
       throw new InternalServerErrorException('ERR_BOOK_REMOVE_FAILED');
     }
-    return { book };
+    return book;
   }
 
   /**
