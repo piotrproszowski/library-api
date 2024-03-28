@@ -66,15 +66,17 @@ export class Book {
   @Column({ unique: true, nullable: true })
   isbn?: string | null;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @Column({ enum: ['return', 'rent'], nullable: true, default: null })
+  status: 'return' | 'rent' | null;
 
   @OneToMany(() => RentEvent, (rentEvent) => rentEvent.book, {
     cascade: true,
     onDelete: 'CASCADE',
   })
   rentEvents: RentEvent[];
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

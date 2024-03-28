@@ -67,7 +67,7 @@ export class BooksService {
    * @returns {Promise<{ book: Book }>}The retrieved book.
    * @throws NotFoundException if the book is not found.
    */
-  async getOne(id: string) {
+  async getOne(id: string): Promise<{ book: Book }> {
     const book = await this.booksRepository
       .createQueryBuilder('book')
       .leftJoinAndSelect('book.rentEvents', 'rentEvents')
