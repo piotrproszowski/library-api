@@ -45,10 +45,6 @@ export class BooksController {
     UserRole.SUPER_ADMIN,
     UserRole.CLIENT,
   )
-  changeStatus(@Param('id') id: string, @Param('action') action: string) {
-    return this.booksService.changeStatus(id, action);
-  }
-
   @Get('/')
   getAll() {
     return this.booksService.getAll();

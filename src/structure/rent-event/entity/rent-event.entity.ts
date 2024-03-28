@@ -1,4 +1,4 @@
-import { RentRegistry } from 'src/structure/rent-registry/entity/rent-registry.entity';
+import { Book } from 'src/structure/books/entity/book.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
@@ -36,6 +36,6 @@ export class RentEvent {
   @ManyToOne(() => User, (user) => user.rentEvents)
   user: User;
 
-  @ManyToOne(() => RentRegistry, (rent) => rent.rentEvents)
-  rentRegistry: RentRegistry;
+  @ManyToOne(() => Book, (book) => book.rentEvents)
+  book: Book;
 }

@@ -64,11 +64,16 @@ export class BooksService {
   /**
    * Retrieves a book by its ID.
    * @param {string}id - The ID of the book to retrieve.
-   * @returns The retrieved book.
+   * @returns {Promise<{ book: Book }>}The retrieved book.
    * @throws NotFoundException if the book is not found.
    */
   async getOne(id: string) {
-    const book = await this.booksRepository.findOneBy({ id });
+    const book = await this.booksRepository
+      .createQueryBuilder('book')
+      .leftJoinAndSelect('book.rentEvents', 'rentEvents')
+      .orderBy('rentEvents.createdAt', 'DESC')
+      .where('book.id = :id', { id })
+      .getOne();
 
     if (!book) {
       throw new NotFoundException('Book not found');
@@ -92,26 +97,5 @@ export class BooksService {
       throw new InternalServerErrorException('ERR_BOOK_REMOVE_FAILED');
     }
     return book;
-  }
-
-  /**
-   * Changes the status of a book by its ID.
-   * @param {string}id - The ID of the book to change the status of.
-   * @param {}action - The action to perform on the book's status.
-   * @returns The updated book.
-   * @throws NotFoundException if the book is not found.
-   */
-  async changeStatus(id: string, action: string) {
-    const book = await this.booksRepository.findOneBy({ id });
-
-    if (!book) {
-      throw new NotFoundException('Book not found');
-    }
-
-    const updatedBook = await this.booksRepository.update(id, {
-      isActive: action === 'activate' ? true : false,
-    });
-
-    return { book: updatedBook };
   }
 }

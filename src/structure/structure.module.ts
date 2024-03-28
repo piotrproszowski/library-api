@@ -5,21 +5,18 @@ import { RentEventController } from './rent-event/rent-event.controller';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from 'src/users/users.module';
-import { RentRegistry } from './rent-registry/entity/rent-registry.entity';
 import { Book } from './books/entity/book.entity';
 import { RentEvent } from './rent-event/entity/rent-event.entity';
-import { RentRegistryController } from './rent-registry/rent-registry.controller';
 import { BooksController } from './books/books.controller';
-import { RentRegistryService } from './rent-registry/rent-registry.service';
 import { BooksService } from './books/books.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([RentRegistry, Book, RentEvent]),
+    TypeOrmModule.forFeature([Book, RentEvent]),
     forwardRef(() => UsersModule),
   ],
-  controllers: [RentRegistryController, BooksController, RentEventController],
-  providers: [RentRegistryService, RentEventService, BooksService],
+  controllers: [BooksController, RentEventController],
+  providers: [RentEventService, BooksService],
   exports: [TypeOrmModule],
 })
 export class StructureModule {}

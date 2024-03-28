@@ -1,4 +1,4 @@
-import { RentRegistry } from 'src/structure/rent-registry/entity/rent-registry.entity';
+import { RentEvent } from 'src/structure/rent-event/entity/rent-event.entity';
 import {
   Column,
   CreateDateColumn,
@@ -72,6 +72,9 @@ export class Book {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => RentRegistry, (rent) => rent.book)
-  rentRegistry: RentRegistry[];
+  @OneToMany(() => RentEvent, (rentEvent) => rentEvent.book, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  rentEvents: RentEvent[];
 }
