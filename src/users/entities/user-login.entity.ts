@@ -14,7 +14,7 @@ export class UserLogin {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.logins)
+  @ManyToOne(() => User)
   user: User;
 
   @Column()

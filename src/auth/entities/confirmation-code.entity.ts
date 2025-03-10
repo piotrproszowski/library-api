@@ -23,7 +23,7 @@ export class ConfirmationCode {
   @Column()
   type: ConfirmationCodeType;
 
-  @ManyToOne(() => User, (user) => user.confirmationCodes, {
+  @ManyToOne(() => User, {
     onDelete: 'CASCADE',
   })
   user: User;

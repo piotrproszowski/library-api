@@ -72,8 +72,9 @@ export class Book {
   @OneToMany(() => RentEvent, (rentEvent) => rentEvent.book, {
     cascade: true,
     onDelete: 'CASCADE',
+    lazy: true,
   })
-  rentEvents: RentEvent[];
+  rentEvents: Promise<RentEvent[]>;
   @CreateDateColumn()
   createdAt: Date;
 

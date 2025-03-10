@@ -4,7 +4,6 @@ import {
   DeleteDateColumn,
   Entity,
   Index,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -41,14 +40,14 @@ export class User {
   @Column({ default: false })
   isEmailVerified: boolean;
 
-  @OneToMany(() => ConfirmationCode, (code) => code.user)
-  confirmationCodes: ConfirmationCode[];
+  @OneToMany(() => ConfirmationCode, (code) => code.user, { lazy: true })
+  confirmationCodes: Promise<ConfirmationCode[]>;
 
-  @OneToMany(() => UserLogin, (login) => login.user)
-  logins: UserLogin[];
+  @OneToMany(() => UserLogin, (login) => login.user, { lazy: true })
+  logins: Promise<UserLogin[]>;
 
-  @ManyToOne(() => RentEvent, (rent) => rent.user)
-  rentEvents: RentEvent[];
+  @OneToMany(() => RentEvent, (rent) => rent.user, { lazy: true })
+  rentEvents: Promise<RentEvent[]>;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -33,7 +33,7 @@ export class RentEvent {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.rentEvents)
+  @ManyToOne(() => User)
   user: User;
 
   @ManyToOne(() => Book, (book) => book.rentEvents)
