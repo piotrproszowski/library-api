@@ -51,25 +51,12 @@ export class AuthService {
     private codesRepository: Repository<ConfirmationCode>,
   ) {}
 
-  /**
-   * Generates a confirmation code using the SHA256 hash function.
-   *
-   * @param {string} userId - The ID of the user for which to generate the confirmation code.
-   * @return {string} The confirmation code generated for the given user ID.
-   */
   generateConfirmationCode(userId: string): string {
     const data = `${userId}-${new Date().getTime()}`;
     const code = createHash('sha256').update(data).digest('hex');
     return code;
   }
 
-  /**
-   * Returns a confirmation link for the given token and confirmation code type.
-   *
-   * @param {string} token - The token to use in the confirmation link.
-   * @param {ConfirmationCodeType} type - The type of confirmation code to generate the link for.
-   * @return {string} The generated confirmation link.
-   */
   getConfirmationLink(token: string, type: ConfirmationCodeType): string {
     const url = new URL('', this.configService.get('app.baseUrl'));
 
@@ -86,14 +73,6 @@ export class AuthService {
     return url.toString();
   }
 
-  /**
-   * Asynchronously validates user credentials using bcrypt.
-   *
-   * @param {string} email - The email of the user to validate.
-   * @param {string} pass - The password of the user to validate.
-   * @return {Promise<Omit<User, 'password'> | null>} A Promise that resolves with the user object minus the password
-   * property if validation is successful, null otherwise.
-   */
   async validateUser(
     email: string,
     pass: string,
@@ -113,15 +92,6 @@ export class AuthService {
     return null;
   }
 
-  /**
-   * Logs in the user by validating their email and password,
-   * and returns a token and user object upon successful authentication.
-   *
-   * @param {LoginDto} data - An object containing email and password strings.
-   * @return {Promise<{ user: Omit<User, 'password'>; token: string }>} An object containing a token string and user object.
-   * @throws {UnauthorizedException} If the credentials are invalid.
-   * @throws {HttpException} If the user account is disabled or email is not verified.
-   */
   async login(
     data: LoginDto,
     loginDetails?: { ip?: string; userAgent?: string },
@@ -158,13 +128,6 @@ export class AuthService {
     return { token, user };
   }
 
-  /**
-   * Refreshes the user token.
-   *
-   * @param {string} id - the user id.
-   * @return {Promise<{ user: Omit<User, 'password'>, token: string }>} Object containing updated user object and token string.
-   * @throws {UnauthorizedException} If user is not found.
-   */
   async refresh(
     id: string,
     loginDetails?: { ip?: string; userAgent?: string },
@@ -201,16 +164,6 @@ export class AuthService {
     return { user, token };
   }
 
-  /**
-   * Registers a new user with the given data, hashes their password,
-   * creates a confirmation code, and sends a confirmation email.
-   *
-   * @async
-   * @param {RegisterDto} data - The user's registration data.
-   * @throws {ConflictException} If a user with the given email already exists.
-   * @throws {BadRequestException} If registration fails for any reason.
-   * @return {Promise<{ user: User }>} An object containing the registered user.
-   */
   async register(data: RegisterDto): Promise<{ user: User }> {
     const { name, email, password: rawPassword } = data;
 
@@ -251,17 +204,11 @@ export class AuthService {
     return { user };
   }
 
-  /**
-   * Resets the user's password.
-   * @param {ResetPasswordDto} data - object containing user's email
-   * @return {Promise<{ success: boolean }>} object with a success key
-   */
   async resetPassword(data: ResetPasswordDto): Promise<{ success: boolean }> {
     const { email } = data;
 
     const user = await this.usersRepository.findOneBy({ email });
 
-    // Don't let anyone know if the user exists or not
     if (!user) return { success: true };
 
     const existingCode = await this.codesRepository.findOneBy({
@@ -271,7 +218,6 @@ export class AuthService {
       wasUsed: Not(true),
     });
 
-    // Don't let anyone know if the code exists or not, and prevent duplicates
     if (existingCode) return { success: true };
 
     const confirmationData = this.codesRepository.create({
@@ -301,17 +247,6 @@ export class AuthService {
     return { success: true };
   }
 
-  /**
-   * Confirms the reset password operation by checking the
-   * validity of the token provided and updating the user's password if the
-   * token is valid.
-   *
-   * @param {ConfirmResetPasswordDto} data - An object containing the reset
-   * password token and the new password.
-   * @throws {UnauthorizedException} If the token is invalid.
-   * @return {Promise<{ success: boolean }>} An object with a boolean value
-   * indicating if the operation was successful.
-   */
   async confirmResetPassword(
     data: ConfirmResetPasswordDto,
   ): Promise<{ success: boolean }> {
@@ -372,14 +307,6 @@ export class AuthService {
     return { success: true };
   }
 
-  /**
-   * Updates user settings based on the given data and user payload.
-   *
-   * @param {UpdateSettingsDto} data - The data to update settings with.
-   * @param {JwtPayload} user - The user payload.
-   * @throws {NotFoundException} If the user is not found.
-   * @return {Promise<{ user: User }>} The updated user object.
-   */
   async updateSettings(
     data: UpdateSettingsDto,
     user: JwtPayload,
@@ -388,36 +315,30 @@ export class AuthService {
     const { id } = user;
 
     const foundUser = await this.usersRepository.findOneBy({ id });
-
-    if (!foundUser) throw new NotFoundException('ERR_USER_NOT_FOUND');
-
-    const existingUser = await this.usersRepository.findOneBy({ email });
-
-    if (existingUser && existingUser.id !== foundUser.id) {
-      throw new BadRequestException('ERR_USER_ALREADY_EXISTS');
+    if (!foundUser) {
+      throw new NotFoundException('ERR_USER_NOT_FOUND');
     }
 
-    if (name) foundUser.name = name;
-    if (email) foundUser.email = email;
+    if (email) {
+      const existingUser = await this.usersRepository.findOneBy({ email });
+      if (existingUser && existingUser.id !== foundUser.id) {
+        throw new BadRequestException('ERR_USER_ALREADY_EXISTS');
+      }
+      foundUser.email = email;
+    }
 
-    const updatedUser = await this.usersRepository.save(foundUser);
+    if (name) {
+      foundUser.name = name;
+    }
 
-    if (!updatedUser) throw new BadRequestException('ERR_USER_NOT_UPDATED');
-
-    return { user: updatedUser };
+    try {
+      const updatedUser = await this.usersRepository.save(foundUser);
+      return { user: updatedUser };
+    } catch (error) {
+      throw new BadRequestException('ERR_USER_NOT_UPDATED');
+    }
   }
 
-  /**
-   * Updates the password for the given user if the provided old password is valid.
-   *
-   * @async
-   * @param {ChangePasswordDto} data - Object containing old and new password.
-   * @param {JwtPayload} user - The authenticated user object.
-   * @throws {NotFoundException} - If the user is not found.
-   * @throws {UnauthorizedException} - If the old password is invalid.
-   * @throws {BadRequestException} - If the user could not be updated.
-   * @return {Promise<{success: boolean}>} - An object indicating if the update was successful.
-   */
   async changePassword(
     data: ChangePasswordDto,
     user: JwtPayload,
@@ -429,15 +350,21 @@ export class AuthService {
     const select = { id: true, password: true };
 
     const foundUser = await this.usersRepository.findOne({ where, select });
-    if (!foundUser) throw new NotFoundException('ERR_USER_NOT_FOUND');
+    if (!foundUser) {
+      throw new NotFoundException('ERR_USER_NOT_FOUND');
+    }
 
     const isValid = await bcrypt.compare(oldPassword, foundUser.password);
-    if (!isValid) throw new UnauthorizedException('ERR_INVALID_PASSWORD');
+    if (!isValid) {
+      throw new UnauthorizedException('ERR_INVALID_PASSWORD');
+    }
 
-    foundUser.password = await bcrypt.hash(newPassword, 10);
-    const updatedUser = await this.usersRepository.save(foundUser);
-    if (!updatedUser) throw new BadRequestException('ERR_USER_NOT_UPDATED');
-
-    return { success: true };
+    try {
+      foundUser.password = await bcrypt.hash(newPassword, 10);
+      await this.usersRepository.save(foundUser);
+      return { success: true };
+    } catch (error) {
+      throw new BadRequestException('ERR_USER_NOT_UPDATED');
+    }
   }
 }
