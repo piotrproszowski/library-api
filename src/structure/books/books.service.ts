@@ -16,12 +16,6 @@ export class BooksService {
     private booksRepository: Repository<Book>,
   ) {}
 
-  /**
-   * Creates a new book.
-   * @param {CreateBookDto}data - The data for creating a book.
-   * @returns {Promise<{ book: Book }>} The created book.
-   * @throws InternalServerErrorException if there is an error creating the book.
-   */
   async create(data: CreateBookDto): Promise<{ book: Book }> {
     const bookData: DeepPartial<Book> = {
       ...data,
@@ -34,13 +28,6 @@ export class BooksService {
     return { book };
   }
 
-  /**
-   * Updates a book by its ID.
-   * @param {string}id - The ID of the book to update.
-   * @param {UpdateBookDto}data - The data for updating the book.
-   * @returns The updated book.
-   * @throws NotFoundException if the book is not found.
-   */
   async update(
     id: string,
     data: UpdateBookDto,
@@ -50,23 +37,12 @@ export class BooksService {
     return { book };
   }
 
-  /**
-   * Retrieves all books.
-   * @returns All books.
-   * @throws NotFoundException if no books are found.
-   */
   async getAll() {
     const books = await this.booksRepository.find();
 
     return { books };
   }
 
-  /**
-   * Retrieves a book by its ID.
-   * @param {string}id - The ID of the book to retrieve.
-   * @returns {Promise<{ book: Book }>}The retrieved book.
-   * @throws NotFoundException if the book is not found.
-   */
   async getOne(id: string): Promise<{ book: Book }> {
     const book = await this.booksRepository
       .createQueryBuilder('book')
@@ -82,12 +58,6 @@ export class BooksService {
     return { book };
   }
 
-  /**
-   * Deletes a book by its ID.
-   * @param id - The ID of the book to delete.
-   * @returns The deleted book.
-   * @throws InternalServerErrorException if there is an error deleting the book.
-   */
   async delete(id: string) {
     const book = await this.getOne(id);
 
