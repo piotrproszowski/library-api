@@ -17,15 +17,9 @@ export class RentService {
     private rentRepository: Repository<RentEvent>,
   ) {}
 
-  /**
-   * Changes the status of a book.
-   * @param {string} id - The ID of the book to change the status of.
-   * @param {any} data - The data for changing the status of the book.
-   * @returns {Promise<{book:Book}> }The updated book.
-   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async changeBookStatus(id: string, data: any): Promise<{ book: Book }> {
     const { book } = await this.booksService.getOne(id);
-    console.log(data);
     return { book };
   }
 }
