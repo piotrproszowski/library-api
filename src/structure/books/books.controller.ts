@@ -5,10 +5,12 @@ import {
   Delete,
   Get,
   Param,
+  ParseEnumPipe,
   ParseUUIDPipe,
   Patch,
   Post,
   Put,
+  BadRequestException,
 } from '@nestjs/common';
 
 import { CreateBookDto } from './dto/create-book.dto';
@@ -19,6 +21,7 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { UserRole } from 'src/users/enums/user-role.enum';
 
 import { BooksService } from './books.service';
+import { BookAction } from './enums/book-action.enum';
 
 @ApiBearerAuth()
 @ApiTags('books')
@@ -45,6 +48,30 @@ export class BooksController {
     UserRole.SUPER_ADMIN,
     UserRole.CLIENT,
   )
+  async performAction(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+    @Param('action', new ParseEnumPipe(BookAction)) action: BookAction,
+  ) {
+    const { book } = await this.booksService.getOne(id);
+
+    switch (action) {
+      case BookAction.RESERVE:
+        // Implement reservation logic
+        return { message: 'Book reserved', book };
+      case BookAction.BORROW:
+        // Implement borrowing logic
+        return { message: 'Book borrowed', book };
+      case BookAction.RETURN:
+        // Implement return logic
+        return { message: 'Book returned', book };
+      case BookAction.CANCEL:
+        // Implement cancellation logic
+        return { message: 'Reservation cancelled', book };
+      default:
+        throw new BadRequestException('Invalid action');
+    }
+  }
+
   @Get('/')
   getAll() {
     return this.booksService.getAll();
