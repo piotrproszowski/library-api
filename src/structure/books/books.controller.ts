@@ -56,16 +56,12 @@ export class BooksController {
 
     switch (action) {
       case BookAction.RESERVE:
-        // Implement reservation logic
         return { message: 'Book reserved', book };
       case BookAction.BORROW:
-        // Implement borrowing logic
         return { message: 'Book borrowed', book };
       case BookAction.RETURN:
-        // Implement return logic
         return { message: 'Book returned', book };
       case BookAction.CANCEL:
-        // Implement cancellation logic
         return { message: 'Reservation cancelled', book };
       default:
         throw new BadRequestException('Invalid action');
