@@ -22,41 +22,109 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Library API
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Modern API for library management, built with NestJS.
+
+## Project Description
+
+Library API is a comprehensive backend solution for library systems. It enables management of books, users, and loans. The system offers full CRUD operation support for all entities, user authentication and authorization, and advanced library management features.
+
+## Main Features
+
+- 📚 **Library Structure Management**: cataloging books, categories, and authors
+- 👥 **User Management**: registration, login, roles (client, employee, administrator)
+- 📝 **Loan Management**: reserving, borrowing, and returning books
+- 🔐 **Security**: JWT, roles, and permissions
+- 📧 **Notifications**: automatic email notifications for users
+
+## Project Structure
+
+The project is organized in a modular structure:
+
+- `auth` - authentication and authorization
+- `config` - application configuration
+- `database` - database configuration
+- `mailer` - email handling
+- `rent` - loan management
+- `structure` - library structure management (books, etc.)
+- `users` - user management
+
+## Technologies
+
+- [NestJS](https://nestjs.com/) - framework
+- [TypeORM](https://typeorm.io/) - database ORM
+- [PostgreSQL](https://www.postgresql.org/) - database
+- [JWT](https://jwt.io/) - authentication tokens
+- [Swagger](https://swagger.io/) - API documentation
+
+## Requirements
+
+- Node.js (v18+)
+- pnpm
+- PostgreSQL
 
 ## Installation
 
 ```bash
+# Clone repository
+$ git clone [REPOSITORY_URL]
+$ cd library-api
+
+# Install dependencies
 $ pnpm install
+
+# Environment configuration
+$ cp .env.example .env
+# Edit the .env file to customize the configuration
 ```
 
-## Running the app
+## Running the Application
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
+# Development mode
 $ pnpm run start:dev
 
-# production mode
+# Production mode
 $ pnpm run start:prod
 ```
 
-## Test
+## API Documentation
+
+After starting the application, Swagger documentation is available at:
+
+```
+http://localhost:3000/api
+```
+
+## Tests
 
 ```bash
-# unit tests
+# Unit tests
 $ pnpm run test
 
-# e2e tests
+# End-to-end tests
 $ pnpm run test:e2e
 
-# test coverage
+# Test coverage
 $ pnpm run test:cov
 ```
+
+## Code Standards
+
+The project uses ESLint and Prettier to maintain high code quality:
+
+```bash
+# Code linting
+$ pnpm run lint
+
+# Code formatting
+$ pnpm run format
+```
+
+## License
+
+This project is covered by the [MIT license](LICENSE).
 
 ## Support
 
@@ -67,7 +135,3 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 - Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
 - Website - [https://nestjs.com](https://nestjs.com/)
 - Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
