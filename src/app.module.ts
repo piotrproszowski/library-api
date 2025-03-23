@@ -6,7 +6,6 @@ import { ConfigModule } from './config/config.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { StructureModule } from './structure/structure.module';
-import { RentModule } from './rent/rent.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { DatabaseModule } from './database/database.module';
@@ -20,7 +19,6 @@ import { ConfigService } from '@nestjs/config';
     UsersModule,
     AuthModule,
     StructureModule,
-    RentModule,
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
