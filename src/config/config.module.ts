@@ -6,12 +6,20 @@ import uploadConfig from './upload.config';
 import authConfig from './auth.config';
 import mailConfig from './mail.config';
 import appConfig from './app.config';
+import securityConfig from './security.config';
 
 @Module({
   imports: [
     NestConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, databaseConfig, uploadConfig, authConfig, mailConfig],
+      load: [
+        appConfig,
+        databaseConfig,
+        uploadConfig,
+        authConfig,
+        mailConfig,
+        securityConfig,
+      ],
     }),
   ],
 })
